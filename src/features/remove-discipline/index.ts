@@ -1,0 +1,1 @@
+export { RemoveDiscipline } from "./ui";

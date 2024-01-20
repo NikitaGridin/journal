@@ -1,0 +1,1 @@
+export { RemoveStudent } from "./ui";

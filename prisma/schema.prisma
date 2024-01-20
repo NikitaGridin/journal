@@ -1,0 +1,55 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Discipline {
+  id            Int            @id @default(autoincrement())
+  name          String
+  studentGrades StudentGrade[]
+  groups        GroupDiscipline[]
+}
+
+model Group {
+  id          Int          @id @default(autoincrement())
+  specialty   String
+  course      Int
+  letter      String
+  disciplines GroupDiscipline[]
+  students    Student[]
+}
+
+model GroupDiscipline {
+  id           Int         @id @default(autoincrement())
+  group_id     Int
+  discipline_id Int
+  group        Group       @relation(fields: [group_id], references: [id],onDelete: Cascade)
+  discipline   Discipline  @relation(fields: [discipline_id], references: [id],onDelete: Cascade)
+
+  @@unique([group_id, discipline_id])
+}
+
+model Student {
+  id       Int            @id @default(autoincrement())
+  name     String
+  group_id Int
+  group    Group          @relation(fields: [group_id], references: [id],onDelete: Cascade)
+  grades   StudentGrade[]
+}
+
+model StudentGrade {
+  id            Int        @id @default(autoincrement())
+  student_id    Int
+  discipline_id Int
+  grade         String?
+  date          DateTime
+  student       Student    @relation(fields: [student_id], references: [id],onDelete: Cascade)
+  discipline    Discipline @relation(fields: [discipline_id], references: [id],onDelete: Cascade)
+}

@@ -1,0 +1,1 @@
+export { AddDisciplineForGroud } from "./ui";

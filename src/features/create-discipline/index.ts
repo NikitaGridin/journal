@@ -1,0 +1,1 @@
+export { CreateDisciplineForm } from "./ui";

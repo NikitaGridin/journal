@@ -1,0 +1,1 @@
+export { ListDisciplinesWidget } from "./ui";
