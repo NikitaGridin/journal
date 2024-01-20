@@ -1,6 +1,5 @@
 "use server";
 import { prisma } from "@/shared/db/prisma-client";
-import { GroupDiscipline } from "@prisma/client";
 
 export interface Discipline {
   id: number;
@@ -56,18 +55,8 @@ export async function getDisciplinesForGroup(
       },
     });
 
-    const disciplines: Discipline[] = groupDisciplines.map(
-      (groupDiscipline: {
-        id: number;
-        group_id: number;
-        discipline_id: number; // Update this property to match the actual structure
-      }) => {
-        const discipline: Discipline = {
-          id: groupDiscipline.discipline_id,
-          name: "",
-        };
-        return discipline;
-      }
+    const disciplines = groupDisciplines.map(
+      (groupDiscipline) => groupDiscipline.discipline
     );
 
     return disciplines;
